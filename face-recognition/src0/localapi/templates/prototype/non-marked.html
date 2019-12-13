@@ -1,0 +1,214 @@
+{% extends "prototype/base.html" %}
+{% block head %}
+<title></title>
+<script src="/static/js/moment-with-locales.min.js"></script>
+<script src="/static/js/moment-timezone.min.js"></script>
+{% endblock %}
+
+{% block content %}
+
+
+<div class="container-fluid">
+
+    <div class="row">
+
+        <div class="col-lg-12 col-sm-12" id="video-cards-container">
+            <div class="row">
+                <h5>Введите имена пациентов:</h5>
+                <div id="face-cards">
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div style="display: none" id="video-card-template">
+
+    <div class="col-md-12 patient-card">
+        <form class="patient-submit-form">
+        <div class="card">
+            <div class="content">
+               <div class="row">
+                    <div class="col-lg-2 col-sm-2">
+                        <div class="row">
+                            <div class="text-center">
+                                <img class="face-img" src="[img]" width="96" height="96">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="text-center"><span class="face-name">[name]</span>
+                            </div>
+                        </div>
+                    </div>
+
+
+                <div class="col-md-9">
+
+                        <input type="hidden" name="id" value="[face_id]">
+
+                    <div class="form-group">
+                        <div class="row">
+                        <input type="text" class="form-control border-input" placeholder="Введите имя"
+                               value="" name="subject_id"> <!-- имя сохраняем в subject_id -->
+                        </div>
+                    </div>
+
+                        <div class="row">
+
+                            <button type="submit" class="btn btn-info btn-fill" id="form-save-button" style="display:none;">Сохранить</button>
+
+                        </div>
+                        <div class="clearfix"></div>
+                </div>
+
+
+                   <div class="col-md-1">
+                       <button type="button" aria-hidden="true" class="close" id="form-delete-button">×</button>
+                   </div>
+               </div>
+            </div>
+        </div>
+        </form>
+    </div>
+</div>
+
+    {% endblock %}
+
+    {% block finish %}
+
+
+    <script type="text/javascript">
+
+
+        function ajax_post(url, data, on_success) {
+            return $.post(url, data, function () {
+                $.notify({
+                    icon: 'ti-user',
+                    message: "Сохранено"
+                },{
+                    type: 'success',
+                    timer: 4000
+                });
+                if(on_success){
+                    on_success();
+                }
+            }).error(function () {
+                            $.notify({
+                    icon: 'ti-user',
+                    message: "Ошибка"
+                },{
+                    type: 'danger',
+                    timer: 4000
+                });
+                }
+
+            );
+        }
+
+        var card_has_focus = false;
+        var card_has_unsaved_name = false;
+
+        function draw_cards(data) {
+            CARD_TEMPLATE = $('#video-card-template').html();
+            var cards = [];
+            var today = moment().tz("Europe/Moscow").format("YYYY.MM.DD");
+
+
+            data.forEach(function (value) {
+                var subject_id = value['subject_id'];
+                // var last_seen = Date.parse(value['last_seen']);
+                var last_seen =  moment(value['last_seen']).tz("Europe/Moscow").format("YYYY.MM.DD HH:mm");
+                if (last_seen.lastIndexOf(today, 0) === 0) {
+                    last_seen =  moment(value['last_seen']).tz("Europe/Moscow").format("HH:mm");
+                };
+                // var name = value['subject_id'] || '';
+                var name = last_seen;
+                var card = CARD_TEMPLATE.replace('[img]', value['image'])
+                    .replace('[name]', name.replace(' ', '<br/>'))
+                    .replace('[subject_id]', subject_id || '')
+                    .replace('[face_id]', value['id']);
+                card = $($.parseHTML( card ));
+                cards.push(card);
+
+                card.find('#form-save-button').prop('disabled', true);
+
+                card.find('.patient-submit-form').on('submit', function (event) {
+                    var form = $(event.target);
+                    var data =  form.serializeArray();
+                    var canvas = form.closest('div.patient-card');
+                    ajax_post('/face-link-to-subject.json', data, on_success=function(){
+                        $(canvas).fadeOut();
+                        card_has_unsaved_name = false;
+                     });
+                    console.log(data);
+                    event.preventDefault();
+                });
+
+                card.find('input[name=subject_id]').keyup(function (event) {
+                    var input = $(event.target);
+                    var val = input.val();
+                    if (val.length > 3){
+                        card.find('#form-save-button').prop('disabled', false);
+                        card_has_unsaved_name = true;
+                    } else {
+                        card.find('#form-save-button').prop('disabled', true);
+                        card_has_unsaved_name = false;
+                    }
+                });
+
+                card.find('input[name=subject_id]').on('focus', function () {
+                    card_has_focus = true;
+                    card.find('#form-save-button').show();
+                }).on('focusout', function () {
+                    card_has_focus = false;
+                });
+
+                card.find('#form-delete-button').click(function (event) {
+                    var button = $(event.target);
+                    var canvas = button.closest('div.patient-card');
+                    var form = button.closest('form');
+                    var data =  $(form).serializeArray();
+                    ajax_post('/face-hide.json', data, on_success=function(){
+                        $(canvas).fadeOut();
+                        card_has_unsaved_name = false;
+                     });
+                    event.preventDefault();
+                });
+
+            });
+            $('#face-cards').empty().append(cards);
+            // $('.patient-card').on('click', function () {
+            //   window.location = "patientcard.html?patient="+$(this).attr('data-patient-id') + '&face_id=' + $(this).attr('data-face-id');
+            // });
+
+            if(cards.length>0){
+                $('#video-cards-container').show();
+            } else { $('#video-cards-container').hide(); }
+        };
+
+        function reload_cards() {
+
+            var timeout_ms = 30000;
+
+            if(card_has_focus || card_has_unsaved_name){
+                setTimeout(reload_cards, timeout_ms);
+            } else {
+                $.getJSON('/faces.json?count=100&last_seconds=7200&filter=nonrecognized', function (data) {
+                    draw_cards(data['faces']);
+                }).always(function () {
+                    setTimeout(reload_cards, timeout_ms);
+                });
+            }
+
+        }
+
+        $(document).ready(function () {
+            demo.initMenu('non-marked');
+            reload_cards();
+        });
+    </script>
+    {% endblock %}

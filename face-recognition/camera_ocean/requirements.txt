@@ -1,0 +1,6 @@
+opencv-python
+imutils
+click
+requests
+django-environ
+raven

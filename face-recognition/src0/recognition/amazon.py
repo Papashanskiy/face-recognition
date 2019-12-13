@@ -1,0 +1,1 @@
+# https://stackoverflow.com/questions/41388926/an-example-of-calling-aws-rekognition-http-api-from-python

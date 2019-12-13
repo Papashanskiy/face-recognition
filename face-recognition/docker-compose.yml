@@ -1,0 +1,244 @@
+version: '2'
+
+services:
+    camera-NAG-1:
+        image: camera-ocean-unit
+        restart: always
+        container_name: "camera-NAG-1"
+        environment:
+            - VIDEO_SOURCE=rtsp://reader:029113MeV2y@172.17.4.11:554/
+            - URL0=http://object-detector-app:5555/process/image
+            - URL=https://vision-api.invitronet.ru/detection/process/image
+            - CAMERA_ID=NAG-1
+            - CROP=991x597x1726x1261
+            - SKIP_SAMPLES=30
+            - LOGLEVEL=DEBUG
+        volumes:
+            - ./video:/video/
+        #links:
+        #    - object-detector-app
+        command: run --forever=1
+
+    camera-ocean-DEV-1:
+        image: camera-ocean-unit
+        restart: always
+        container_name: "camera-DEV-1"
+        environment:
+            - VIDEO_SOURCE=rtsp://admin:admin1234@172.17.44.100:554/
+            - URL=https://vision-api.invitronet.ru/detection/process/image
+            - CAMERA_ID=DEV-1
+            - SKIP_SAMPLES=30
+            - CROP=660x135x1390x710
+            - LOGLEVEL=DEBUG
+        volumes:
+            - ./video:/video/
+        #links:
+        #    - object-detector-app
+        command: run --forever=1
+
+    camera-FRC-1:
+        image: camera-ocean-unit
+        restart: always
+        container_name: "camera-FRC-1"
+        environment:
+            - VIDEO_SOURCE=rtsp://admin:eskulap15@79.165.242.192:10554/tcp/av0_0
+            - CAMERA_ID=FRC-1
+            - SKIP_SAMPLES=30
+            - LOGLEVEL=DEBUG
+        volumes:
+            - ./video:/video/
+        #links:
+        #    - object-detector-app
+        command: run --forever=1
+
+    camera-FRC-3:
+        image: camera-ocean-unit
+        restart: always
+        container_name: "camera-FRC-3"
+        environment:
+            - VIDEO_SOURCE=rtsp://admin:MtYgCsze8ZFY@195.9.43.10:554/Streaming/Channels/101
+            - CAMERA_ID=FRC-3
+            - SKIP_SAMPLES=30
+            - LOGLEVEL=DEBUG
+            - CROP=200x700x2688x1520
+            - RESIZE_WIDTH=1024
+        volumes:
+            - ./video:/video
+        command: run --forever=1
+
+
+    camera-FRC-4:
+        image: camera-ocean-unit
+        restart: always
+        container_name: "camera-FRC-4"
+        environment:
+            - VIDEO_SOURCE=rtsp://admin:1q2w3e4r@85.95.185.230:555/Streaming/Channels/101
+            - CAMERA_ID=FRC-4
+            - SKIP_SAMPLES=30
+            - LOGLEVEL=DEBUG
+            - CROP=0x100x2188x1520
+            - RESIZE_WIDTH=2048
+        volumes:
+            - ./video:/video
+        command: run --forever=1
+
+    #camera-FRC-5:
+    #    image: camera-ocean-unit
+    #    restart: always
+    #    container_name: "camera-FRC-5"
+    #    environment:
+    #        - VIDEO_SOURCE=rtsp://vision:Nouser00@172.16.72.42:554/Streaming/Channels/101
+    #        - CAMERA_ID=FRC-5
+    #        - SKIP_SAMPLES=30
+    #        - LOGLEVEL=DEBUG
+    #        - RESIZE_WIDTH=1024
+    #    volumes:
+    #        - ./video:/video
+    #    command: run --forever=1
+
+    #camera-FRC-6:
+    #    image: camera-ocean-unit
+    #    restart: always
+    #    container_name: "camera-FRC-6"
+    #    environment:
+    #        - VIDEO_SOURCE=rtsp://admin:Bydbnhjj431@217.13.222.48:554/Streaming/Channels/101
+    #        - CAMERA_ID=FRC-6
+    #        - SKIP_SAMPLES=30
+    #        - LOGLEVEL=DEBUG
+    #        - CROP=0x140x869x630
+    #    volumes:
+    #        - ./video:/video
+    #    command: run --forever=1
+
+    #camera-FRC-7:
+    #    image: camera-ocean-unit
+    #    restart: always
+    #    container_name: "camera-FRC-7"
+    #    environment:
+    #        - VIDEO_SOURCE=rtsp://vision:Nouser00@172.16.47.74:554/Streaming/Channels/101
+    #        - CAMERA_ID=FRC-7
+    #        - SKIP_SAMPLES=30
+    #        - LOGLEVEL=DEBUG
+    #        - CROP=610x312x1629x738
+    #    volumes:
+    #        - ./video:/video
+    #    command: run --forever=1
+
+    camera-FRC-9:
+        image: camera-ocean-unit
+        restart: always
+        container_name: "camera-FRC-9"
+        environment:
+            - VIDEO_SOURCE=rtsp://admin:Qwerty1234@95.165.33.198:554/Streaming/Channels/101
+            - CAMERA_ID=FRC-9
+            - SKIP_SAMPLES=30
+            - LOGLEVEL=DEBUG
+            - CROP=194x0x1980x762
+        volumes:
+            - ./video:/video
+        command: run --forever=1
+
+    camera-FRC-11:
+        image: camera-ocean-unit
+        restart: always
+        container_name: "camera-FRC-11"
+        environment:
+            - VIDEO_SOURCE=rtsp://admin:Aa713428@178.18.215.218:654/Streaming/Channels/101
+            - CAMERA_ID=FRC-11
+            - SKIP_SAMPLES=30
+            - LOGLEVEL=DEBUG
+            #- CROP=194x0x1980x762
+        volumes:
+            - ./video:/video
+        command: run --forever=1
+
+
+    camera-FRC-12:
+        image: camera-ocean-unit
+        restart: always
+        container_name: "camera-FRC-12"
+        environment:
+            - VIDEO_SOURCE=rtsp://vision:Nouser00@46.8.55.242:555/Streaming/Channels/101
+            - CAMERA_ID=FRC-12
+            - SKIP_SAMPLES=30
+            - LOGLEVEL=DEBUG
+            - CROP=650x450x2200x1100
+        volumes:
+            - ./video:/video
+        command: run --forever=1
+
+    camera-FRC-13:
+        image: camera-ocean-unit
+        restart: always
+        container_name: "camera-FRC-13"
+        environment:
+            - VIDEO_SOURCE=rtsp://admin:invitro1!@194.186.228.130:554/Streaming/Channels/101
+            - CAMERA_ID=FRC-13
+            - SKIP_SAMPLES=30
+            - LOGLEVEL=DEBUG
+            - RESIZE_WIDTH=400
+        volumes:
+            - ./video:/video
+        command: run --forever=1
+
+    object-detector-app:
+        image: object-detector-unit
+        restart: always
+        container_name: "object-detector-unit"
+        environment:
+            - URL=https://vision-api.invitronet.ru/recognition/recognize/image
+            - TMP_IMAGE_PATH=/tmp/image
+        ports:
+            - 8001:80
+        volumes:
+            - ./detector-tmp-image:/tmp/image
+        # links:
+        #    - face-recognition-app
+        # depends_on:
+        #    - face-recognition-app
+
+
+    face-recognition-app-migrate:
+        image: face-recognition-unit
+        container_name: "face-recognition-unit-migrate"
+        environment:
+            - DATABASE_URL=psql://postgres:postgres@db:5432/facerec
+        command: /app/face_recognition/manage.py migrate
+        depends_on:
+          - db
+        links:
+          - db
+
+    face-recognition-app:
+        image: face-recognition-unit
+        restart: always
+        container_name: "face-recognition-unit"
+        environment:
+            - PYTHONPATH=/app
+            - MONGODB_CONNECTION=mongodb://mongodb
+            - DATABASE_URL=psql://postgres:postgres@db:5432/facerec
+        ports:
+            - 8002:80
+        depends_on:
+          - db
+          - face-recognition-app-migrate
+        links:
+          - db
+
+    db:
+        image: postgres
+        restart: always
+        environment:
+          - POSTGRES_USER=postgres
+          - POSTGRES_PASSWORD=postgres
+          - POSTGRES_DB=facerec
+        volumes:
+          - ./pgdata:/var/lib/postgresql/data
+
+    nginx-dev:
+      image: nginx
+      volumes:
+       - ./face_recognition/src/face_recognition/ui/static:/usr/share/nginx/html
+      ports:
+       - "8080:80"
+

@@ -1,0 +1,83 @@
+{% extends "dashboard/base.html" %}
+{% block head %}
+<title>АРМПС 3</title>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row">
+        <p>Посетители</p></div>
+
+    <div class="row" id="face-cards">
+
+    </div>
+</div>
+
+
+<div style="display: none" id="video-card-template">
+    <div class="col-lg-2 col-sm-2">
+        <div class="card patient-card" data-patient-id="[subject_id]" data-face-id="[face_id]">
+            <div class="content">
+                <div class="row">
+                    <div class="text-center">
+                        <img class="face-img" src="[img]" width="96" height="96">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="text-center"><span class="face-name">[name]</span><br><span class="text-muted">[time]</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
+{% block finish %}
+<script type="text/javascript">
+
+    function draw_cards(data) {
+        CARD_TEMPLATE = $('#video-card-template').html();
+        var cards = [];
+        data.forEach(function (value) {
+            var subject_id = value['subject_id'];
+            var name = value['subject_id'] || 'не определён';
+            var last_seen_date = new Date(value['last_seen']);
+            var card = CARD_TEMPLATE.replace('[img]', value['image'])
+                .replace('[name]', name.replace(' ', '<br/>'))
+                .replace('[face_id]', value['id'])
+                .replace('[subject_id]', subject_id || '')
+                .replace('[time]', last_seen_date.toLocaleTimeString("ru", {hour: 'numeric', minute: 'numeric'}));
+            cards.push(card);
+            console.debug('last_seen_date=', last_seen_date);
+        });
+        $('#face-cards').empty().append(cards);
+        $('.patient-card').on('click', function () {
+            window.location = "patientcard.html?patient=" + $(this).attr('data-patient-id') + '&face_id=' + $(this).attr('data-face-id');
+        });
+
+        if (cards.length > 0) {
+            $('#video-cards-container').show();
+        } else {
+            $('#video-cards-container').hide();
+        }
+    };
+
+    function reload_cards() {
+        $.getJSON('/faces.json?count=10&filter=recognized&last_seconds=60', function (data) {
+            draw_cards(data['faces']);
+        }).always(function () {
+            setTimeout(reload_cards, 2000);
+        })
+
+    }
+
+    $(document).ready(function () {
+        demo.initMenu('incomers');
+        reload_cards();
+    });
+</script>
+{% endblock %}

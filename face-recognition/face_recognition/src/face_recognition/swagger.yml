@@ -1,0 +1,174 @@
+swagger: "2.0"
+info:
+  description: "API фейсдетекшена для медофисов. Пилотная версия."
+  version: "0.0.1"
+  title: "Vision API"
+  contact:
+    email: "s@lavr.me"
+  license:
+    name: "Private"
+host: "vision-api.invitronet.ru"
+basePath: "/recognition"
+tags:
+- name: "recognition"
+  description: "Распознанное"
+schemes:
+- "https"
+paths:
+  /presence/workstation/faces:
+    get:
+      tags:
+      - "recognition"
+      summary: "Список лиц"
+      description: "Получить список лиц, появившихся на камере за последнее время"
+      operationId: "getWorkstationFaces"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "workstation_id"
+        in: "query"
+        description: "Идентификатор рабочего места АРМ МО"
+        required: true
+        type: string
+        format: uuid
+      - name: "minutes"
+        type: integer
+        in: "query"
+        description: "Интервал времени, за который нужно выдать список найденных лиц."
+        required: false
+        default: 1
+      responses:
+        200:
+          description: "Успешная операция"
+          schema:
+            $ref: "#/definitions/Faces"
+        400:
+          description: "Входные параметры отсутствуют или неверны"
+        410:
+          description: "К рабочему месту workstation_id не прикреплена камера"
+
+  /recognize/face/image:
+    get:
+      tags:
+        - "recognition"
+      description: "Получить фотографию лица или json-информацию о лице. Обязателен один из параметров `id` или `arm_guid`"
+      produces:
+      - "image/jpg"
+      - "application/json"
+      parameters:
+      - name: id
+        in: query
+        description: "Внутренний идентификатор лица vision api"
+        required: false
+        type: integer
+      - name: arm_guid
+        in: query
+        description: "Идентификатор лица arm_guid"
+        required: false
+        type: string
+        format: uuid
+      - name: workstation_id
+        in: query
+        required: true
+        type: string
+        format: uuid
+        description: Идентификатор рабочей станции, с которой отправляется запрос
+      - name: redirect_if_empty
+        in: query
+        required: false
+        type: string
+        format: url
+        description: Адрес картинки, редирект на которую отдаст ручка, если лицо не найдено в базе и fmt=binary
+      - name: fmt
+        in: query
+        required: false
+        type: string
+        description: Если fmt=image, то этот метод возвращает изображение, если fmt=json, то метод возвражает json.
+      - name: photo_id
+        in: query
+        required: false
+        type: integer
+        description: Если указано, то возвращает фотографию с конкретным идентификатором. Если не указано, то возвращает дефолтную фотографию лица.
+      responses:
+        200:
+          description: "Успешная операция, возвращает картинку-изображение или json-информацию об изображениях этого лица"
+        302:
+          description: "Если задан параметр redirect_if_empty и картинка лица не найдена, то api отдаёт редирект на значение параметра redirect_if_empty"
+        404:
+          description: "Не найдено лицо с таким идентификатором (если не задан параметр redirect_if_empty)"
+        410:
+          description: "Не найдено фотографий для лица с таким идентификатором. Скорее всего проблема в данных на сервере, но это неточно"
+
+  /recognize/face/set-id:
+    post:
+      tags:
+      - "recognition"
+      summary: "Сохранить идентификатор лица"
+      description: "Сохранить внешний идентификатор лица в базе vision api"
+      operationId: "faceSetId"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "face_id"
+        in: "query"
+        description: "Внутренний идентификатор лица vision api"
+        required: true
+        type: "integer"
+      - name: provider_name
+        description: "Тип идентификатора"
+        in: query
+        type: string
+        required: true
+        enum:
+          - arm_guid
+      - name: provider_id
+        in: query
+        required: true
+        type: string
+        description: "Cобственно идентификатор, который нужно сохранить"
+      - name: workstation_id
+        in: query
+        required: true
+        type: string
+        format: uuid
+        description: Идентификатор рабочей станции, с которой отправляется запрос
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "object"
+        400:
+          description: "Входные параметры неверные или отсутствуют"
+
+
+definitions:
+
+  Faces:
+    type: "object"
+    properties:
+      faces:
+        type: "array"
+        items:
+          $ref: "#/definitions/Face"
+
+  Face:
+    type: "object"
+    properties:
+      face_id:
+        type: "integer"
+        format: "int64"
+        description: "Внутренний идентификатор лица в базе vision api"
+      face_url:
+        type: "string"
+        format: "uri"
+        description: "Ссылка на фотографию, uri"
+      last_seen_at:
+        type: "string"
+        format: "date-time"
+        description: "Когда последний раз видели это лицо"
+      arm_guid:
+        type: "string"
+        format: uuid
+        description: "Идентификатор АРМ, если установлен"

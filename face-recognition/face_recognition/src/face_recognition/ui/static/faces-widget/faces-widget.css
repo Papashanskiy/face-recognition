@@ -1,0 +1,47 @@
+#faceid-widget-placeholder {
+    position: fixed;
+    bottom: 0;
+    width: 50px;
+    height: 50px;
+    z-index: 1000;
+    right: 0px;
+    background-color: #e0e0e0;
+    margin-bottom: 50px;
+    margin-right: 50px;
+    border: 1px solid #e0e0e0;
+    display: none;
+}
+
+#faceid-widget-placeholder .faces-widget-placeholder__bg{
+    position: relative;
+    top: 0;
+    left: 0;
+}
+
+#faceid-widget-placeholder .faces-widget-placeholder__fg{
+    position: relative;
+    top: -50px;
+    left: 0;
+}
+
+.images{
+    width: 32px;
+}
+.face-image {
+    width: 64px;
+    height: 64px;
+    border: 0;
+}
+.hide {
+!important;display: none;
+}
+.image-text-name {
+    font-size: 11px;
+    color: gray;
+    position: absolute;
+    width: 64px;
+    white-space: pre-wrap;
+}
+.table-image {
+    margin-bottom: 20px;
+}

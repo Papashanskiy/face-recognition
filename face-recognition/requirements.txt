@@ -1,0 +1,15 @@
+dlib
+opencv-python
+numpy
+imutils
+click
+scipy
+tensorflow
+pymongo
+celery
+scikit-image
+pytz
+hug
+jinja2
+pillow
+flask

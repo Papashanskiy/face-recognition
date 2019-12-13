@@ -1,0 +1,28 @@
+<html>
+<head>
+<title>{% block title %}{% endblock %}</title>
+    <script src="https://yastatic.net/jquery/3.1.1/jquery.min.js"></script>
+</head>
+<body>
+<script>
+function loadFaces(){
+
+
+}
+</script>
+    <table>
+
+{% for face in faces %}
+        <tr><td>
+          {% for src in face.images %}<img src="{{ src }}" width="64" height="64">{% endfor %}
+        </td><td>
+            {{ face.merged_cnt }}
+        </td>
+{% endfor %}
+
+</table>
+
+<script>
+    setTimeout(loadFaces(), 600);
+</script>
+</body>

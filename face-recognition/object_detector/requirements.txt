@@ -1,0 +1,12 @@
+flask
+dlib
+pillow
+numpy
+opencv-python
+requests
+gunicorn
+django-environ
+raven
+blinker
+statsd
+six

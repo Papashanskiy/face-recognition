@@ -1,0 +1,213 @@
+{% extends "dashboard/base.html" %}
+{% block head %}
+    <title>АРМПС 3</title>
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-3 col-sm-3">
+                <div class="card">
+                    <div class="content">
+                        <div class="row">
+                            <div class="col-xs-5">
+                                <div class="icon-big icon-warning text-center">
+                                    <i class="ti-comments-smiley"></i>
+                                </div>
+                            </div>
+                            <div class="col-xs-7">
+                                <div class="numbers">
+                                    <p>Отзывы</p>
+                                    +12
+                                </div>
+                            </div>
+                        </div>
+                        <div class="footer">
+                            <hr />
+                            <div class="stats">
+                                <i class="ti-reload"></i> Обновлено сейчас
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-3">
+                <div class="card">
+                    <div class="content">
+                        <div class="row">
+                            <div class="col-xs-5">
+                                <div class="icon-big icon-success text-center">
+                                    <i class="ti-wallet"></i>
+                                </div>
+                            </div>
+                            <div class="col-xs-7">
+                                <div class="numbers">
+                                    <p>Выручка</p>
+                                    112&nbsp;500<span class="text-muted" style="font-size: 14px">&nbsp;₽&nbsp;</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="footer">
+                            <hr />
+                            <div class="stats">
+                                <i class="ti-calendar"></i> Вчера
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-3">
+                <div class="card">
+                    <div class="content">
+                        <div class="row">
+                            <div class="col-xs-5">
+                                <div class="icon-big icon-danger text-center">
+                                    <i class="ti-pulse"></i>
+                                </div>
+                            </div>
+                            <div class="col-xs-7">
+                                <div class="numbers">
+                                    <p>Ошибки</p>
+                                    3
+                                </div>
+                            </div>
+                        </div>
+                        <div class="footer">
+                            <hr />
+                            <div class="stats">
+                                <i class="ti-timer"></i> Вчера
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-3">
+                <div class="card">
+                    <div class="content">
+                        <div class="row">
+                            <div class="col-xs-5">
+                                <div class="icon-big icon-info text-center">
+                                    <i class="ti-server"></i>
+                                </div>
+                            </div>
+                            <div class="col-xs-7">
+                                <div class="numbers">
+                                    <p>Результатов</p>
+                                    +45
+                                </div>
+                            </div>
+                        </div>
+                        <div class="footer">
+                            <hr />
+                            <div class="stats">
+                                <i class="ti-reload"></i> 10 минут назад
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+        <table class="js-table-images">
+            <tr class="js-face-table">
+            </tr>
+        </table>
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="header">
+                        <h4 class="title">Посетители и время в очереди</h4>
+                        <p class="category">Или другие графики, которые показывают достижение целевых показателей в этом медофисе</p>
+                    </div>
+                    <div class="content">
+                        <div id="chartHours" class="ct-chart"></div>
+                        <div class="footer">
+                            <div class="chart-legend">
+                                <i class="fa fa-circle text-info"></i> Посетителей
+                                <i class="fa fa-circle text-warning"></i> Время в очереди
+                            </div>
+                            <hr>
+                            <div class="stats">
+                                <i class="ti-reload"></i> обновлено 3 минуты назад
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="header">
+                        <h4 class="title">Выполнение плана смены</h4>
+                        <p class="category">Январь 2018</p>
+                    </div>
+                    <div class="content">
+                        <div id="chartPreferences" class="ct-chart ct-perfect-fourth"></div>
+
+                        <div class="footer">
+                            <div class="chart-legend">
+                                <i class="fa fa-circle text-info"></i> Продажи анализов
+                                <i class="fa fa-circle text-danger"></i> Отставание от плана
+                                <i class="fa fa-circle text-warning"></i> Продажи услуг
+                            </div>
+                            <hr>
+                            <div class="stats">
+                                <i class="ti-timer"></i> По состоянию на вчера
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card ">
+                    <div class="header">
+                        <h4 class="title">Продажи 2017</h4>
+                        <p class="category">Продажи по месяцам, тыс.руб.</p>
+                    </div>
+                    <div class="content">
+                        <div id="chartActivity" class="ct-chart"></div>
+
+                        <div class="footer">
+                            <div class="chart-legend">
+                                <i class="fa fa-circle text-info"></i> Анализы
+                                <i class="fa fa-circle text-warning"></i> Услуги
+                            </div>
+                            <hr>
+                            <div class="stats">
+                                <i class="ti-check"></i> По данным ООО "Инвитро"
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block finish %}
+	<script type="text/javascript">
+    	$(document).ready(function(){
+            demo.initMenu('main');
+
+        	demo.initChartist();
+
+        	$.notify({
+            	icon: 'ti-user',
+            	message: "Представьте интерфейс АРМПС ..."
+            },{
+                type: 'success',
+                timer: 4000
+            });
+
+
+            faces_widget.init('#faces-widget-placeholder');
+
+    	});
+	</script>
+{% endblock %}

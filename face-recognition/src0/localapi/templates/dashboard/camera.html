@@ -1,0 +1,45 @@
+{% extends "dashboard/base.html" %}
+{% block head %}
+<title>АРМПС 3</title>
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <img id="live-image" width="790" height="500"
+                 src="http://25.media.tumblr.com/34976460fad4c39c58c0451bd782b42c/tumblr_mjrexrXM2r1qessyeo1_500.gif">
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block finish %}
+<script type="text/javascript">
+
+    function update_live_image() {
+        d = new Date();
+        // TODO: ручка current-image.jpg должна отдавать картинку с нарисованным контуром лица
+        var img = $("#live-image");
+        img.attr("src", "/current-image-debug.jpg?rnd=" + d.getTime());
+        img.on('load', function () {
+            // setTimeout(update_live_image, 500);
+        });
+        // $("#bg-image").css('background-image', 'url(' + "/current-image.jpg?"+d.getTime() + ')');
+        setTimeout(update_live_image, 500);
+
+    };
+
+    $(document).ready(function () {
+        demo.initMenu('camera');
+        update_live_image();
+
+        // faces_widget.init('#faces-widget-placeholder');
+    });
+</script>
+
+
+{% endblock %}

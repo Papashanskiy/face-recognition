@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<ul>
+{% for slot in timeline.iter_slots() %}
+    <li>{{ slot.time.strftime('%H:%M %d.%m.%Y') }}
+        <ul>
+            {% for master in slot.masters %}
+                 <li>{% for face in master.last_faces() %}
+                     <a href="/face-edit.html?id={{ master.master._id }}">
+                     <img src="/images/{{ face._id }}.jpg" alt="{{ master.master._id }}" width="96" height="96">
+                         </a>
+                     <!-- <img src="/images/{{ face._id }}.jpg?debug=1" alt="{{ master.master._id }}" width="96" height="96"> -->
+                     {% endfor %}
+<a href="/face-edit.html?id={{ master.master._id }}">
+    <img src="/images/{{ master.master._id }}.jpg?debug=1" alt="self" width="96" height="96"></a>
+            {% endfor %}
+        </ul>
+{% endfor %}
+</ul>
+
+<script>
+    // setTimeout(function(){ window.location.reload(true);}, 10000);
+</script>
+
+
+</body>
+</html>
+
+
+
+

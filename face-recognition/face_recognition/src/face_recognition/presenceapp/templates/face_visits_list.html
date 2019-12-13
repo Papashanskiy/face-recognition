@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+
+{% block title %}Лица на камере № ___{% endblock %}
+
+{% block side %}
+
+{% endblock %}
+
+{% block content %}
+
+
+<table class="table table-stripped">
+<thead>
+    <tr>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+    </tr>
+</thead>
+
+<tbody>
+    {% for face in data.visits %}
+
+        <tr>
+            <td>{{ face.face_id }}</td>
+            <td><img src="{{ face.face_url }}"></td>
+            <td>{{ face.minute_slot }}</td>
+            <td>{{ face.seen_times }}</td>
+        </tr>
+
+    {% endfor %}
+</tbody>
+</table>
+
+{% endblock %}

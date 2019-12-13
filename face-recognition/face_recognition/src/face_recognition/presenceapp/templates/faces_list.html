@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+
+{% block title %}Лица на камере № ___{% endblock %}
+
+{% block side %}
+
+{% endblock %}
+
+{% block content %}
+
+
+<table class="table table-stripped">
+<thead>
+    <tr>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+    </tr>
+</thead>
+<tbody>
+    {% for face in data.faces %}
+
+        <tr>
+            <td>{{ face.face_id }} @ {{ face.last_seen_at }}</td>
+            <td><a style="border:0;" href="/recognition{% url 'face-visits-html' %}?workstation_id={{ workstation_id }}&face_id={{ face.face_id }}"><img src="{{ face.face_url }}"></a></td>
+        </tr>
+
+    {% endfor %}
+</tbody>
+</table>
+
+{% endblock %}

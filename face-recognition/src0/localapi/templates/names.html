@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<ul>
+{% for name in names %}
+            <li>{% if name.subject_id %}{{ name.subject_id }}{% else %} неизвестный {% endif %} / {{ name.last_seen }}
+
+{% endfor %}
+</ul>
+<script>
+    setTimeout(function(){ window.location.reload(true);}, 10000);
+</script>
+
+
+</body>
+</html>
+
+
+
+

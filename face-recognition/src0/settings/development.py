@@ -1,0 +1,14 @@
+import os
+
+MONGODB_CONNECTION = os.getenv('MONGODB_CONNECTION', 'mongodb://localhost')
+BROKER_URL = '{}/tasks'.format(MONGODB_CONNECTION)
+
+VIDEO_SOURCE = os.getenv('VIDEO_SOURCE', '0')
+
+FACE_SIZE = (96, 96)
+MINIMUM_FACE_SIZE = 32
+
+CELERY_ALWAYS_EAGER = False
+
+MAILRU_CLIENT_ID = 'invitro'
+MAILRU_CLIENT_SECRET = 'wyoxEVfj24K4zBUq'

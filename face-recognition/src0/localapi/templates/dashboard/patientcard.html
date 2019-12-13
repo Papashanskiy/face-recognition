@@ -1,0 +1,283 @@
+{% extends "dashboard/base.html" %}
+{% block head %}
+<title>АРМПС 3</title>
+
+
+<script type="text/javascript">
+
+    // немного магии, чтобы загрузить jsonp-данные в patient_data
+
+    var patient_data = {};
+
+    function set_patient_data(data) {
+        console.log('set_patient_data', data);
+        patient_data = data['item'];
+    }
+</script>
+
+<script type="text/javascript">
+    function getParameterByName(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
+</script>
+
+<script type="text/javascript">
+    var script = document.createElement('script');
+    script.src = '/patients/get.json?callback=set_patient_data&id=' + getParameterByName('patient');
+    document.getElementsByTagName('head')[0].appendChild(script);
+</script>
+
+{% endblock %}
+
+{% block content %}
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-4 col-md-5">
+            <div class="card card-user">
+                <div class="image">
+                    <img src="/static/dashboard/assets/img/background.jpg" alt="..."/>
+                </div>
+                <div class="content">
+                    <div class="author">
+                        <img class="avatar border-white" src="http://pronksiapartments.ee/wp-content/uploads/2015/10/placeholder-face-big.png" src0="/static/dashboard/assets/img/faces/face-2.jpg" alt="..."/>
+                        <h4 class="title"><span id="form-data-id"><!-- Федин Владимир --></span><br/>
+                            <a href="#">
+                                <small><span id="form-data-email"><!-- Федин Владимир --></span></small>
+                            </a>
+                        </h4>
+                    </div>
+                    <p class="description text-center">
+                        <span id="form-data-comment-mini"></span>
+                    </p>
+                                     <!--   <button type="button" class="btn btn-lg btn-block btn-primary"><i class="ti-shopping-cart"></i> Оформить заказ</button><p></p> -->
+
+                </div>
+
+                <hr>
+                <div class="text-center">
+                    <div class="row">
+                        <div class="col-md-3 col-md-offset-1">
+                            <h5>12<br/>
+                                <small>визитов</small>
+                            </h5>
+                        </div>
+                        <div class="col-md-4">
+                            <h5><span id="form-data-revenue">14 000</span><br/>
+                                <small>выручка</small>
+                            </h5>
+                        </div>
+                        <div class="col-md-3">
+                            <h5>12 дек<br/>
+                                <small>визит</small>
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+
+<!--
+
+Кнопка здесь в принципе нужна, но над дизайном надо еще подумать
+
+                <div class="text-center">
+                <div class="row">
+                <div class="col-lg-offset-2 col-lg-8 col-md-8">
+                    <button type="button" class="btn btn-lg btn-block btn-primary"><i class="ti-shopping-cart"></i> Оформить заказ</button><p></p>
+                </div>
+                </div>
+                </div> -->
+
+            </div>
+            <div class="card">
+                <div class="header">
+                    <h4 class="title">Визиты</h4>
+                </div>
+                <div class="content">
+                    <ul class="list-unstyled team-members">
+                        <li>
+                            <div class="row">
+                                <div class="col-xs-8 col-md-offset-1">
+                                    ИНЗ 100000000
+                                    <br/>
+                                    <span class="text-muted"><small>Не готов</small></span>
+                                </div>
+                                <div class="col-xs-3">
+                                    <a href="#"><i class="ti-arrow-circle-right"></i></a>
+                                </div>
+                            </div>
+                        </li>
+
+
+                        <li>
+                            <div class="row">
+                                <div class="col-xs-8 col-md-offset-1">
+                                    ИНЗ 100000001
+                                    <br/>
+                                    <span class="text-success"><small>Готов</small></span>
+                                </div>
+                                <div class="col-xs-3">
+                                    <a href="#"><i class="ti-arrow-circle-right"></i></a>
+                                </div>
+                            </div>
+                        </li>
+
+
+                        <li>
+                            <div class="row">
+                                <div class="col-xs-8 col-md-offset-1">
+                                    ИНЗ 100000002
+                                    <br/>
+                                    <span class="text-danger"><small>Ошибка</small></span>
+                                </div>
+                                <div class="col-xs-3">
+                                    <a href="#"><i class="ti-arrow-circle-right"></i></a>
+                                </div>
+                            </div>
+                        </li>
+
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8 col-md-7">
+            <div class="card">
+                <div class="header">
+                    <h4 class="title">Данные пациента</h4>
+                </div>
+                <div class="content">
+                    <form id="patient-form" action="javascript:console.log('default submit');">
+                        <input type="hidden" name="id" value="">
+                        <input type="hidden" name="link_with_face_id" value="">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Имя</label>
+                                    <input type="text" class="form-control border-input" placeholder="Имя"
+                                           value="" id="form-data-name" name="name">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Фамилия</label>
+                                    <input type="text" class="form-control border-input" placeholder="Фамилия"
+                                           value="" id="form-data-surname" name="surname">
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">e-mail</label>
+                                    <input type="email" class="form-control border-input" placeholder="Email"
+                                           value="" name="email">
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label>Адрес</label>
+                                    <input type="text" class="form-control border-input" placeholder="Адрес"
+                                           value="" id="form-data-address" name="address">
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Город</label>
+                                    <input type="text" class="form-control border-input" placeholder="Город"
+                                           value="" id="form-data-city" name="city">
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Комментарии</label>
+                                    <textarea rows="5" class="form-control border-input" placeholder="" id="form-data-comment"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <button class="btn btn-info btn-fill btn-wd" id="form-save-button">Сохранить</button>
+                            <button class="btn btn-danger btn-wd" id="form-delete-button">Удалить</button>
+                        </div>
+                        <div class="clearfix"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+{% endblock %}
+
+{% block finish %}
+
+
+<script type="text/javascript">
+
+    function save_form() {
+        var data =  $("#patient-form").serializeArray();
+        $.post('/patients/edit.json', data, function () {
+            $.notify({
+            	icon: 'ti-user',
+            	message: "Сохранено"
+            },{
+                type: 'success',
+                timer: 4000
+            });
+        }).error(function () {
+                        $.notify({
+            	icon: 'ti-user',
+            	message: "Ошибка сохранения"
+            },{
+                type: 'danger',
+                timer: 4000
+            });
+            }
+
+        )
+    }
+
+    $(document).ready(function () {
+        demo.initMenu('patients');
+        $.each( patient_data, function( key, value ) {
+            console.log(key, value);
+          $('span#form-data-'+key).text(value);
+          $('[name='+key+']').val(value);
+        });
+        // $('#form-save-button').on('click', save_form)
+        $('#patient-form').on('submit', function (event) {
+            save_form();
+            event.preventDefault();
+        })
+
+        var face_id = getParameterByName('face_id');
+        if(face_id){
+            $('[name=link_with_face_id]').val(face_id);
+            $('img.avatar').attr('src',  '/images/'+face_id+'.jpg');
+        } else {
+            $('img.avatar').attr('src', '/image-by-subject/' + patient_data['id'] + '.jpg')
+        }
+
+        // faces_widget.init('#faces-widget-placeholder');
+    });
+</script>
+{% endblock %}

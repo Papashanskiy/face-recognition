@@ -1,0 +1,1 @@
+from face_recognition.recognitionapp.connectors.mailru.vision import VisionAPI, RecognizeImage as Image; a = VisionAPI(); r = a.recognize_one(Image(person_id='vasya', name='1.jpg', data=open('/Users/lavr/Downloads/p-5abb733c41bc967122b0c1ee.jpg', 'rb')),create_new=True)

@@ -1,0 +1,11 @@
+pytz
+pillow
+requests
+gunicorn
+django>2.0
+django-environ
+whitenoise
+psycopg2-binary
+raven
+django-statsd-mozilla
+statsd

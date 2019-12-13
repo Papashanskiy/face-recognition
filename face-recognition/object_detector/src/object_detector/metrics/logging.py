@@ -1,0 +1,35 @@
+# encoding: utf-8
+from __future__ import absolute_import
+
+import logging
+
+from .base import MetricsBackend
+
+
+logger = logging.getLogger('sendr.metrics')
+
+
+class LoggingBackend(MetricsBackend):
+    def incr(self, key, instance=None, tags=None, amount=1, sample_rate=1):
+        logger.debug('%r: %+g', key, amount, extra={
+            'instance': instance,
+            'tags': tags or {},
+        })
+
+    def timing(self, key, value, instance=None, tags=None, sample_rate=1):
+        logger.debug('%r: %g ms', key, value, extra={
+            'instance': instance,
+            'tags': tags or {},
+        })
+
+    def set(self, key, value, instance=None, tags=None, sample_rate=1):
+        logger.debug('%r: %g', key, value, extra={
+            'instance': instance,
+            'tags': tags or {},
+        })
+
+    def gauge(self, key, value, instance=None, tags=None, sample_rate=1):
+        logger.debug('%r: %g', key, value, extra={
+            'instance': instance,
+            'tags': tags or {},
+        })

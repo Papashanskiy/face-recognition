@@ -1,0 +1,33 @@
+<html>
+
+<title>{% block title %}{% endblock %}</title>
+<a href="faces.html"><-Back</a>
+    <table>
+
+        <tr>
+            <td width="128">
+                <img src="{{ face.image }}" width="64" height="64">
+            </td>
+            <td>
+                <form action="/face-save" method="post">
+                <ul>
+                    <input type="hidden" name="id" value="{{ face.id }}">
+                    <li>subject_id: <input name="subject_id" value="{% if face.subject_id %}{{ face.subject_id|default('') }}{% else %}{%endif%}">
+                        <input type="submit" value="save"></li>
+                    <li>last_seen: {{ face.last_seen }} </li>
+                    <li>count:  {{ face.merged_cnt }}</li>
+                </ul>
+                </form>
+
+                <form action="/face-hide" method="post">
+                    <input type="hidden" name="id" value="{{ face.id }}">
+                    <input type="submit" value=" hide this series "></li>
+                </form>
+
+               {% for im in face.images %}<img src="{{ im.src }}" width="32" height="32">{% endfor %}
+            </td>
+
+        </tr>
+
+    </table>
+

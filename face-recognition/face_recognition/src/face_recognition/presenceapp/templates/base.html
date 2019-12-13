@@ -1,0 +1,61 @@
+{% load i18n %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}title is here{% endblock %}</title>
+    <link href="https://yastatic.net/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="https://yastatic.net/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://yastatic.net/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+
+    {% block head-includes %}<!-- page-specific js and css -->{% endblock %}
+
+</head>
+<body class="{% block section_id %}home{% endblock section_id %}-page">
+<div id="wrap">
+    <div class="container">
+        <div class="page-header clearfix">
+            <div class="to-right">
+                <a class="logo-box " href="#" target="_blank"><img alt="" src=""></a>
+            </div>
+            <p class="lead"></p>
+        </div>
+        <hr class="green-line">
+
+
+        <div class="row">
+            {% block main_menu %}{% endblock %}
+
+            <div class="col-xs-3 side">
+
+                {% block side %}{% endblock %}
+            </div>
+
+            <div class="col-xs-9" id="content-box">
+
+                {% block content %}content is here{% endblock %}
+
+            </div>
+        </div>
+
+    </div>
+    <div id="push"></div>
+</div>
+
+<div id="footer" class="container bs-docs-container">
+    <div class="row">
+        <div class="col-xs-6">
+            <p>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
+

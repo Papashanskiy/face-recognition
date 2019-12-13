@@ -1,0 +1,107 @@
+.header-wrapper {
+    width: 100%;
+    height: 40px;
+    min-width: 1170px;
+    background: #000;
+}
+.table-wrapper {
+    margin-bottom: 30px;
+    float: right;
+    margin-left: 65%;
+    position: absolute;
+    bottom: 5%;
+}
+.search {
+    margin-left: 10%;
+    margin-top: 30px;
+}
+.search-input {
+    width: 50%;
+}
+.search-button {
+    background: #3a8029;
+    color: white;
+}
+.contacts:hover {
+    background-color: #fff4d6;
+}
+.contacts {
+    cursor: pointer;
+    width: 150px;
+}
+.image-text-name {
+    font-size: 11px;
+    color: gray;
+    position: absolute;
+    width: 64px;
+    white-space: pre-wrap;
+}
+.images{
+    width: 32px;
+}
+.images:hover {
+    cursor: pointer;
+    -webkit-animation-name: hvr-pulse-shrink;
+    animation-name: hvr-pulse-shrink;
+    -webkit-animation-duration: 0.3s;
+    animation-duration: 0.3s;
+    -webkit-animation-timing-function: linear;
+    animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    -webkit-animation-direction: alternate;
+    animation-direction: alternate;
+}
+.select {
+    background-color: #fff4d6;
+    width: 320px;
+}
+@-webkit-keyframes hvr-pulse-shrink {
+    to {
+        -webkit-transform: scale(0.9);
+        transform: scale(0.9);
+    }
+}
+@keyframes hvr-pulse-shrink {
+    to {
+        -webkit-transform: scale(0.9);
+        transform: scale(0.9);
+    }
+}
+.hvr-pulse-shrink {
+    display: inline-block;
+    vertical-align: middle;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px transparent;
+}
+.face-image {
+    width: 64px;
+    height: 64px;
+    border: 0;
+}
+.text-row-title {
+    color: #656565;
+    font-size: 14px;
+    float: left;
+    width: 200px;
+}
+.hide {
+    !important;display: none;
+}
+.main-card {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+.text-row-value {
+    font-size: 14px;
+    color: black;
+    margin-left: 15px;
+    line-height: 22px;
+}
+.back {
+    font-size: 10px;
+    color: yellowgreen;
+    margin-top: 20px;
+    margin-left: 30px;
+}
